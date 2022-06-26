@@ -1,0 +1,211 @@
+.admin {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-sidenav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+  box-shadow: border-box;
+}
+
+.admin-one-nav-item {
+  width: 100%;
+  width: 200px;
+  height: 45px;
+  border: 1px solid #fff;
+  display: flex;
+  background-color: #ed143d;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+}
+
+.admin-main-area {
+  width: 400px;
+}
+
+/*.admin-button {
+  width: 100px;
+  cursor: pointer;
+  height: 30px;
+  font-size: 18px;
+  border: 1px solid gray;
+  border-radius: 4px;
+}*/
+
+.admin-nav-arrow-down {
+  position: absolute;
+  top: 26px;
+  font-size: 45px !important;
+  color: #ed143d;
+}
+
+.admin-add-new-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-add-new-sub-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-one-form-item {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.admin-one-form-item .one-form-field {
+  width: 100%;
+  /*font-size: 18px;*/
+  /*letter-spacing: 1px;*/
+  /*height: 40px;*/
+  /*border-radius: 4px;*/
+  /*border: 1px solid gray;*/
+  /*outline: none;*/
+  /*padding: 5px;*/
+  /*box-sizing: border-box;*/
+}
+
+/* .admin-one-form-item select {
+  width: 100%;
+  font-size: 18px;
+  letter-spacing: 1px;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid gray;
+  outline: none;
+  text-align: center;
+}
+
+.admin-one-form-item textarea {
+  width: 100%;
+  height: 100px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  border: 1px solid gray;
+  outline: none;
+  padding: 5px;
+}
+
+.admin-one-form-item button {
+  width: 120px;
+  cursor: pointer;
+  height: 33px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #ed143d;
+  outline: none;
+}*/
+
+.checkbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox input {
+  width: unset;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.file {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.file button {
+  width: 50px;
+  margin-left: 10px;
+  outline: none;
+
+}
+
+.filtered-category-dropdown {
+  position: absolute;
+  top: 56px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 5px gray;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: scroll;
+  z-index: 1;
+}
+
+.filtered-category-dropdown div {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #80808033;
+}
+
+.upload-img-preview {
+  width: 100%;
+  max-height: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.upload-img-preview img {
+  width: auto;
+  max-width: 100%;
+  max-height: 260px;
+}
+
+.one-img-preview {
+  position: relative;
+}
+
+.close-preview-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.input-file {
+  display: flex;
+  flex: 1;
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.file button.upload-btn {
+  background-color: gray;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.file button.uploading-btn {
+  background-color: #ed143d;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}

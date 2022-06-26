@@ -1,0 +1,54 @@
+.confirm-delete-item-prompt {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*background-color: #00000061;*/
+  background-color: #ffffff6b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirm-delete-item-prompt-content {
+  width: 400px;
+  height: 250px;
+  background-color: #fff;
+  box-shadow: 0 0 10px gray;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.confirm-delete-item-prompt-content p {
+  font-size: 18px;
+}
+
+.confirm-delete-item-prompt-content p span {
+  font-weight: bold;
+}
+
+.confirm-delete-item-prompt-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.confirm-delete-item-prompt-buttons button {
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  height: 35px;
+  width: 100px;
+  color: #fff;
+  outline: none;
+  background-color: #ed143d;
+}
