@@ -11,30 +11,24 @@ const {
   postEditItem,
 } = adminActions;
 
-const SET_ALL_CATEGORIES = 'admin/SET_ALL_CATEGORIES';
-const SET_ALL_SUB_CATEGORIES = 'admin/SET_ALL_SUB_CATEGORIES';
-const SET_SUB_CATEGORIES_FOR_CATEGORY = 'admin/SET_SUB_CATEGORIES_FOR_CATEGORY';
-const SELECT_CATEGORY = 'admin/SELECT_CATEGORY';
-const SELECT_SUB_CATEGORY = 'admin/SELECT_SUB_CATEGORY';
-const SET_NEW_ITEM_FORM_DATA = 'admin/SET_NEW_ITEM_FORM_DATA';
-const SET_IMAGE_FORM_DATA = 'admin/SET_IMAGE_DATA';
-const SET_IMAGE_URLS = 'admin/SET_IMAGE_URLS';
-const SET_UPLOADING_IMAGE = 'admin/SET_UPLOADING_IMAGE';
-const SET_LOADING_EDIT_ITEM_MODAL = 'admin/SET_LOADING_EDIT_ITEM_MODAL';
-const SET_EDITING_ITEM = 'admin/SET_EDITING_ITEM';
-const SET_SUBMITTING_FLAG = 'admin/SET_SUBMITTING_FLAG';
-const SET_ITEM_NAME = 'admin/SET_ITEM_NAME';
-const SET_ITEM_PRICE = 'admin/SET_ITEM_PRICE';
-const SET_ITEM_DISCOUNT = 'admin/SET_ITEM_DISCOUNT';
-const SET_ITEM_BEST_OFFER = 'admin/SET_ITEM_BEST_OFFER';
-const SET_ITEM_RATING = 'admin/SET_ITEM_RATING';
-const SET_NUMBER_OF_RATING = 'admin/SET_NUMBER_OF_RATING';
-const SET_ITEM_WARRENTY = 'admin/SET_ITEM_WARRENTY';
-const SET_RETURN_POLICY = 'admin/SET_RETURN_POLICY';
-const SET_REPLACEMENT_POLICY = 'admin/SET_REPLACEMENT_POLICY';
-const SET_COD = 'admin/SET_COD';
-const SET_ITEM_DESC = 'admin/SET_ITEM_DESC';
-const SET_AVAILABLE_COLORS = 'admin/SET_AVAILABLE_COLORS';
+const SET_ALL_CATEGORIES = 'addNewItem/SET_ALL_CATEGORIES';
+const SET_ALL_SUB_CATEGORIES = 'addNewItem/SET_ALL_SUB_CATEGORIES';
+const SET_SUB_CATEGORIES_FOR_CATEGORY = 'addNewItem/SET_SUB_CATEGORIES_FOR_CATEGORY';
+const SELECT_CATEGORY = 'addNewItem/SELECT_CATEGORY';
+const SELECT_SUB_CATEGORY = 'addNewItem/SELECT_SUB_CATEGORY';
+const SET_NEW_ITEM_FORM_DATA = 'addNewItem/SET_NEW_ITEM_FORM_DATA';
+const SET_IMAGE_FORM_DATA = 'addNewItem/SET_IMAGE_DATA';
+const SET_IMAGE_URLS = 'addNewItem/SET_IMAGE_URLS';
+const SET_UPLOADING_IMAGE = 'addNewItem/SET_UPLOADING_IMAGE';
+const SET_LOADING_EDIT_ITEM_MODAL = 'addNewItem/SET_LOADING_EDIT_ITEM_MODAL';
+const SET_EDITING_ITEM = 'addNewItem/SET_EDITING_ITEM';
+const SET_SUBMITTING_FLAG = 'addNewItem/SET_SUBMITTING_FLAG';
+const SET_ITEM_NAME = 'addNewItem/SET_ITEM_NAME';
+const SET_ITEM_PRICE = 'addNewItem/SET_ITEM_PRICE';
+const SET_ITEM_DISCOUNT = 'addNewItem/SET_ITEM_DISCOUNT';
+const SET_ITEM_BEST_OFFER = 'addNewItem/SET_ITEM_BEST_OFFER';
+const SET_ITEM_RATING = 'addNewItem/SET_ITEM_RATING';
+const SET_ITEM_DESC = 'addNewItem/SET_ITEM_DESC';
 
 const setAllCategories = arr => ({ type: SET_ALL_CATEGORIES, arr });
 const setAllSubCategories = arr => ({ type: SET_ALL_SUB_CATEGORIES, arr });
@@ -48,16 +42,7 @@ const setEditingItem = item => ({ type: SET_EDITING_ITEM, item });
 const setSubmitting = bool => ({ type: SET_SUBMITTING_FLAG, bool });
 const setItemName = name => ({ type: SET_ITEM_NAME, name });
 const setItemPrice = price => ({ type: SET_ITEM_PRICE, price });
-const setItemDiscount = discount => ({ type: SET_ITEM_DISCOUNT, discount });
-const setItemBestOffer = bestOffer => ({ type: SET_ITEM_BEST_OFFER, bestOffer });
-const setItemRating = rating => ({ type: SET_ITEM_RATING, rating });
-const setNumberOfRating = number => ({ type: SET_NUMBER_OF_RATING, number });
-const setItemWarrenty = warrenty => ({ type: SET_ITEM_WARRENTY, warrenty });
-const setReturnPolicy = policy => ({ type: SET_RETURN_POLICY, policy });
-const setReplacementPolicy = policy => ({ type: SET_REPLACEMENT_POLICY, policy });
-const setCOD = bool => ({ type: SET_COD, bool });
 const setItemDesc = desc => ({ type: SET_ITEM_DESC, desc });
-const setAvailableColors = colors => ({ type: SET_AVAILABLE_COLORS, colors });
 const selectCategory = () => {};
 
 const defaultState = {
@@ -73,16 +58,7 @@ const defaultState = {
   itemName: '',
   itemPrice: '',
   itemDescription: '',
-  discount: '',
   imageUrls: [],
-  bestOffer: '',
-  customerRating: '',
-  numberOfRating: '',
-  warrenty: '',
-  returnPolicy: '',
-  replacement: '',
-  avaliableColors: '',
-  COD: false, 
 };
 
 const changeItemImage = e => async (dispatch, getState) => {
@@ -263,19 +239,10 @@ export const ACTIONS = {
   discardImage,
   setItemName,
   setItemPrice,
-  setItemDiscount,
-  setItemBestOffer,
-  setItemRating,
-  setNumberOfRating,
-  setItemWarrenty,
-  setReturnPolicy,
-  setReplacementPolicy,
-  setCOD,
   setItemDesc,
-  setAvailableColors,
 };
 
-function AdminReducer(state = defaultState, action) {
+function AddNewItemReducer(state = defaultState, action) {
   switch (action.type) {
     case SET_ALL_CATEGORIES:
       return Object.assign({}, state, {
@@ -334,49 +301,13 @@ function AdminReducer(state = defaultState, action) {
       return Object.assign({}, state, {
         itemPrice: action.price,
       });
-    case SET_ITEM_DISCOUNT:
-      return Object.assign({}, state, {
-        discount: action.discount,
-      });
-    case SET_ITEM_BEST_OFFER:
-      return Object.assign({}, state, {
-        bestOffer: action.bestOffer,
-      });
-    case SET_ITEM_RATING:
-      return Object.assign({}, state, {
-        rating: action.rating,
-      });
-    case SET_NUMBER_OF_RATING:
-      return Object.assign({}, state, {
-        numberOfRating: action.number,
-      });
-    case SET_ITEM_WARRENTY:
-      return Object.assign({}, state, {
-        warrenty: action.warrenty,
-      });
-    case SET_RETURN_POLICY:
-      return Object.assign({}, state, {
-        returnPolicy: action.policy,
-      });
-    case SET_REPLACEMENT_POLICY:
-      return Object.assign({}, state, {
-        replacement: action.policy,
-      });
-    case SET_COD:
-      return Object.assign({}, state, {
-        COD: action.bool,
-      });
     case SET_ITEM_DESC:
       return Object.assign({}, state, {
         itemDescription: action.desc,
-      });
-    case SET_AVAILABLE_COLORS:
-      return Object.assign({}, state, {
-        avaliableColors: action.colors,
       });
     default:
       return state;
   }
 }
 
-export default AdminReducer;
+export default AddNewItemReducer;

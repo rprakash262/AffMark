@@ -4,9 +4,9 @@ import { adminActions } from '../actions';
 
 const { addNewCategory } = adminActions;
 
-const SET_CATEGORY = 'admin/SET_CATEGORY';
-const SET_FILTERED_CATEGORIES = 'admin/SET_FILTERED_CATEGORIES';
-const SET_SUBMITTING_NEW_CAT_FLAG = 'admin/SET_SUBMITTING_NEW_CAT_FLAG';
+const SET_CATEGORY = 'addNewCategory/SET_CATEGORY';
+const SET_FILTERED_CATEGORIES = 'addNewCategory/SET_FILTERED_CATEGORIES';
+const SET_SUBMITTING_NEW_CAT_FLAG = 'addNewCategory/SET_SUBMITTING_NEW_CAT_FLAG';
 
 const setNewCategory = category => ({ type: SET_CATEGORY, category });
 const setFilteredCategories = cat => ({ type: SET_FILTERED_CATEGORIES, cat });

@@ -16,34 +16,11 @@ class Admin extends Component {
   render() {
     const {
       selectedTab,
-      newCategory,
-      allCategories,
-      changeNewCategory,
       setSelectedTab,
-      newSubCategory,
-      changeNewSubCategory,
-      submitNewCategory,
-      selectedCategoryId,
-      selectedSubCategoryId,
-      selectCategory,
-      submitNewSubCategory,
-      allSubCategories,
-      subcategoriesForCategory,
-      selectSubCategory,
-      changeNewItemFormData,
-      newItemFormData,
-      changeItemImage,
-      uploadItemImage,
-      submitNewItem,
-      imageUrl,
-      uploadingImage,
       changeSecurityKey,
       submitSecurityKey,
       loggedIn,
-      filteredCategories,
-      filteredSubCategories,
       submitttingFlag,
-      discardImage,
     } = this.props;
 
     return (
@@ -96,38 +73,9 @@ class Admin extends Component {
               </div>
             </div>
             <div className="admin-main-area">
-              {selectedTab === 'addNewCategory' && (
-                <AddNewCategory
-                  // submitttingFlag={submitttingFlag}
-                  // newCategory={newCategory}
-                  // changeNewCategory={changeNewCategory}
-                  // submitNewCategory={submitNewCategory}
-                  // filteredCategories={filteredCategories}
-                />
-              )}
-              {selectedTab === 'addNewSubCategory' && (
-                <AddNewSubCategory
-                  submitttingFlag={submitttingFlag}
-                  allCategories={allCategories}
-                  changeNewSubCategory={changeNewSubCategory}
-                  newSubCategory={newSubCategory}
-                  selectedCategoryId={selectedCategoryId}
-                  selectCategory={selectCategory}
-                  submitNewSubCategory={submitNewSubCategory}
-                  filteredSubCategories={filteredSubCategories}
-                />
-              )}
-              {selectedTab === 'addNewItem' && (
-                <AddNewItemForm
-                  selectCategory={selectCategory}
-                  selectedCategoryId={selectedCategoryId}
-                  allCategories={allCategories}
-                  allSubCategories={allSubCategories}
-                  subcategoriesForCategory={subcategoriesForCategory}
-                  selectSubCategory={selectSubCategory}
-                  selectedSubCategoryId={selectedSubCategoryId}
-                />
-              )}
+              {selectedTab === 'addNewCategory' && <AddNewCategory /> }
+              {selectedTab === 'addNewSubCategory' && <AddNewSubCategory /> }
+              {selectedTab === 'addNewItem' && <AddNewItemForm /> }
             </div>
           </div>
         )}
@@ -139,57 +87,22 @@ class Admin extends Component {
 const mapState = state => {
   const {
     selectedTab,
-    newCategory,
-    newSubCategory,
-    allCategories,
-    allSubCategories,
-    selectedCategoryId,
-    selectedSubCategoryId,
-    newItemFormData,
-    subcategoriesForCategory,
-    imageUrl,
-    uploadingImage,
     loggedIn,
-    filteredCategories,
-    filteredSubCategories,
     submitttingFlag,
   } = state.admin;
 
   return {
     selectedTab,
-    newCategory,
-    newSubCategory,
-    allCategories,
-    selectedCategoryId,
-    selectedSubCategoryId,
-    allSubCategories,
-    newItemFormData,
-    subcategoriesForCategory,
-    imageUrl,
-    uploadingImage,
     loggedIn,
-    filteredCategories,
-    filteredSubCategories,
     submitttingFlag,
   };
 }
 
 const mapDispatch = {
   init: ACTIONS.init,
-  changeNewCategory: ACTIONS.changeNewCategory,
   setSelectedTab: ACTIONS.setSelectedTab,
-  submitNewCategory: ACTIONS.submitNewCategory,
-  changeNewSubCategory: ACTIONS.changeNewSubCategory,
-  selectCategory: ACTIONS.selectCategory,
-  selectSubCategory: ACTIONS.selectSubCategory,
-  submitNewSubCategory: ACTIONS.submitNewSubCategory,
-  changeNewItemFormData: ACTIONS.changeNewItemFormData,
-  changeItemImage: ACTIONS.changeItemImage,
-  uploadItemImage: ACTIONS.uploadItemImage,
-  submitNewItem: ACTIONS.submitNewItem,
   changeSecurityKey: ACTIONS.changeSecurityKey,
   submitSecurityKey: ACTIONS.submitSecurityKey,
-  discardImage: ACTIONS.discardImage,
 }
 
 export default connect(mapState, mapDispatch)(Admin);

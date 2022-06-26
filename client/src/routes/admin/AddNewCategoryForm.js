@@ -53,14 +53,6 @@ class AddNewCategory extends Component {
               variant="outlined"
               onChange={e => changeNewCategory(e.target.value)}
             />
-            {/* <input
-              onFocus={this.onFocus}
-              onBlur={this.onBlur}
-              type="text"
-              placeholder="Enter category name"
-              onChange={e => changeNewCategory(e.target.value)}
-              value={newCategory}
-            /> */}
           </div>
           {showDropdown && (
             <div className="filtered-category-dropdown">

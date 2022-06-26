@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -6,6 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+
+import { ACTIONS } from '../../reducers/AddNewSubCategoryReducer';
 
 // import SelectDropdown from '../../components/selectDropdown';
 
@@ -39,6 +42,10 @@ class AddNewCategory extends Component {
     }
   }
 
+  async componentDidMount() {
+    // this.props.init();
+  }
+
   onFocus = () => {
     this.setState({
       showDropdown: true,
@@ -66,7 +73,8 @@ class AddNewCategory extends Component {
       submitttingFlag,
     } = this.props;
 
-    console.log({showDropdown});
+    console.log({ allCategories }, '==>>>>>>>>')
+
 
     return (
       <div className="admin-add-new-sub-category">
@@ -146,4 +154,31 @@ class AddNewCategory extends Component {
   }
 }
 
-export default withStyles(useStyles)(AddNewCategory);
+const mapState = state => {
+  const {
+    newSubCategory,
+    selectedCategoryId,
+    allCategories,
+    filteredCategories,
+    filteredSubCategories,
+    submitttingNewSubCatFlag,
+} = state.addNewSubCategory;
+
+  return {
+    newSubCategory,
+    selectedCategoryId,
+    allCategories,
+    filteredCategories,
+    filteredSubCategories,
+    submitttingNewSubCatFlag,
+  }
+}
+
+const mapDispatch = {
+  init: ACTIONS.init,
+  changeNewSubCategory: ACTIONS.changeNewSubCategory,
+  selectCategory: ACTIONS.selectCategory,
+  submitNewSubCategory: ACTIONS.submitNewSubCategory,
+}
+
+export default connect(mapState, mapDispatch)(withStyles(useStyles)(AddNewCategory));
