@@ -43,7 +43,7 @@ class AddNewCategory extends Component {
   }
 
   async componentDidMount() {
-    // this.props.init();
+    this.props.init();
   }
 
   onFocus = () => {

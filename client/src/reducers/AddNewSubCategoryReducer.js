@@ -114,7 +114,7 @@ function AddNewSubCategoryReducer(state = defaultState, action) {
   switch (action.type) {
     case SET_ALL_CATEGORIES: 
       return Object.assign(state, {}, {
-        allCategories: action.categories
+        allCategories: action.categories,
       });
     case SET_NEW_SUB_CATEGORY: 
       return Object.assign(state, {}, {

@@ -21,6 +21,7 @@ class Admin extends Component {
       submitSecurityKey,
       loggedIn,
       submitttingFlag,
+      allCategories
     } = this.props;
 
     return (
@@ -73,7 +74,7 @@ class Admin extends Component {
               </div>
             </div>
             <div className="admin-main-area">
-              {selectedTab === 'addNewCategory' && <AddNewCategory /> }
+              {selectedTab === 'addNewCategory' && <AddNewCategory allCategories={allCategories} /> }
               {selectedTab === 'addNewSubCategory' && <AddNewSubCategory /> }
               {selectedTab === 'addNewItem' && <AddNewItemForm /> }
             </div>
@@ -89,12 +90,14 @@ const mapState = state => {
     selectedTab,
     loggedIn,
     submitttingFlag,
+    allCategories
   } = state.admin;
 
   return {
     selectedTab,
     loggedIn,
     submitttingFlag,
+    allCategories
   };
 }
 
