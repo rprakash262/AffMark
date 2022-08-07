@@ -13,8 +13,9 @@ class AddNewCategory extends Component {
     }
   }
 
+
   async componentDidMount() {
-    this.props.init();
+    await this.props.init();
   }
 
   onFocus = () => {
@@ -39,6 +40,7 @@ class AddNewCategory extends Component {
       filteredCategories,
       submitttingFlag,
     } = this.props;
+
 
     return (
       <div className="admin-add-new-category">
@@ -66,7 +68,6 @@ class AddNewCategory extends Component {
           <Button
             variant="contained"
             onClick={submitttingFlag ? () => {} : submitNewCategory}
-            // className="admin-button"
           >
             {submitttingFlag ? 'Wait...' : 'Submit'}
           </Button>

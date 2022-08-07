@@ -1,6 +1,7 @@
 import { ACTIONS as layoutActions } from './LayoutReducer';
 
 import { adminActions } from '../actions';
+import { ACTIONS as adminReducerActions } from './AdminReducer';
 
 const { addNewCategory } = adminActions;
 
@@ -54,7 +55,10 @@ const submitNewCategory = () => async (dispatch, getState) => {
       return setTimeout(() => {
         return dispatch(layoutActions.setAlert(false, 'danger', response.result));
       }, 4000);
+
     }
+
+    dispatch(adminReducerActions.init());
 
     const { result } = response;
     const { categoryName: catName } = result;

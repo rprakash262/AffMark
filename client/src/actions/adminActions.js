@@ -54,7 +54,8 @@ export const getSubCategoriesByCategoryId = async categoryId => {
 }
 
 export const fileUpload = async imageObj => {
-  const response = await axios.post('/file-upload', imageObj);
+  console.log({imageObj})
+  const response = await axios.post('/file-upload', { imageObj });
 
   const { data } = response;
 

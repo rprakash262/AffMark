@@ -191,9 +191,9 @@ router.post('/add-new-item', async (req, res) => {
       itemName,
       itemDescription,
       itemPrice,
-      itemImage,
-      offer,
-      isFeatured,
+      itemImage: itemImage[0],
+      // offer,
+      // isFeatured,
       buyLink,
     });
 
@@ -207,8 +207,8 @@ router.post('/add-new-item', async (req, res) => {
       itemDescription: response.itemDescription,
       itemPrice: response.itemPrice,
       itemImage: response.itemImage,
-      offer: response.offer,
-      isFeatured: response.isFeatured,
+      // offer: response.offer,
+      // isFeatured: response.isFeatured,
       buyLink: response.buyLink,
     }
 

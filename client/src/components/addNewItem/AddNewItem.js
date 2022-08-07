@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
 
 import RateSlider from '../../components/rateSlider';
 
@@ -61,18 +62,20 @@ class AddNewItem extends Component {
       itemName,
       itemPrice,
       itemDescription,
+      buyLink,
       setItemName,
       setItemPrice,
       setItemDesc,
+      setItemBuyLink,
       allCategories,
       selectedCategoryId,
       selectCategory,
       subcategoriesForCategory,
       selectSubCategory,
       selectedSubCategoryId,
+      submitttingFlag,
+      submitNewItem,
     } = this.props;
-
-    console.log({ props: this.props });
 
     return (
       <div className="admin-add-new-item">
@@ -145,6 +148,24 @@ class AddNewItem extends Component {
             />
           </div>
           <div className="admin-one-form-item">
+            <TextField
+              value={itemPrice}
+              className="one-form-field"
+              label="Price"
+              variant="outlined"
+              onChange={e => setItemPrice(e.target.value)}
+            />
+          </div>
+          <div className="admin-one-form-item">
+            <TextField
+              value={buyLink}
+              className="one-form-field"
+              label="Buy Link"
+              variant="outlined"
+              onChange={e => setItemBuyLink(e.target.value)}
+            />
+          </div>
+          <div className="admin-one-form-item">
             <h6>Upload Image:</h6>
             {imageUrls.length > 0 && (
               <div className="upload-img-preview">
@@ -184,6 +205,15 @@ class AddNewItem extends Component {
               </div>
             )}
           </div>
+          <div className="admin-one-form-item">
+          <Button
+            variant="contained"
+            onClick={submitttingFlag ? () => {} : submitNewItem}
+            // className="admin-button"
+          >
+            {submitttingFlag ? 'Wait...' : 'Submit'}
+          </Button>
+        </div>
         </div>
       </div>
     );
@@ -202,6 +232,7 @@ const mapState = state => {
     itemName,
     itemPrice,
     itemDescription,
+    submitttingFlag,
   } = state.addNewItem;
 
   return {
@@ -215,18 +246,21 @@ const mapState = state => {
     itemName,
     itemPrice,
     itemDescription,
+    submitttingFlag,
   }
 }
 
 const mapDispatch = {
-  selectSubCategory: ACTIONS.selectSubCategory,
   selectCategory: ACTIONS.selectCategory,
+  selectSubCategory: ACTIONS.selectSubCategory,
   changeItemImage: ACTIONS.changeItemImage,
   uploadItemImage: ACTIONS.uploadItemImage,
   discardImage: ACTIONS.discardImage,
   setItemName: ACTIONS.setItemName,
   setItemPrice: ACTIONS.setItemPrice,
   setItemDesc: ACTIONS.setItemDesc,
+  setItemBuyLink: ACTIONS.setItemBuyLink,
+  submitNewItem: ACTIONS.submitNewItem,
 }
 
 export default withStyles(useStyles, styles, { withTheme: true })(connect(mapState, mapDispatch)(AddNewItem));

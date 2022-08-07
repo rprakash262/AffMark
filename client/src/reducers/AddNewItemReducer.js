@@ -29,10 +29,12 @@ const SET_ITEM_DISCOUNT = 'addNewItem/SET_ITEM_DISCOUNT';
 const SET_ITEM_BEST_OFFER = 'addNewItem/SET_ITEM_BEST_OFFER';
 const SET_ITEM_RATING = 'addNewItem/SET_ITEM_RATING';
 const SET_ITEM_DESC = 'addNewItem/SET_ITEM_DESC';
+const SET_ITEM_BUY_LINK = 'addNewItem/SET_ITEM_BUY_LINK';
 
 const setAllCategories = arr => ({ type: SET_ALL_CATEGORIES, arr });
 const setAllSubCategories = arr => ({ type: SET_ALL_SUB_CATEGORIES, arr });
 const selectCategoryInternal = catId => ({ type: SELECT_CATEGORY, catId });
+const setSubcategoriesForCategory = arr => ({ type: SET_SUB_CATEGORIES_FOR_CATEGORY, arr });
 const selectSubCategory = subCatId => ({ type: SELECT_SUB_CATEGORY, subCatId });
 const setImageFormData = imageFormData => ({ type: SET_IMAGE_FORM_DATA, imageFormData });
 const setImageUrls = imageUrls => ({ type: SET_IMAGE_URLS, imageUrls });
@@ -43,7 +45,8 @@ const setSubmitting = bool => ({ type: SET_SUBMITTING_FLAG, bool });
 const setItemName = name => ({ type: SET_ITEM_NAME, name });
 const setItemPrice = price => ({ type: SET_ITEM_PRICE, price });
 const setItemDesc = desc => ({ type: SET_ITEM_DESC, desc });
-const selectCategory = () => {};
+const setItemBuyLink = link => ({ type: SET_ITEM_BUY_LINK, link });
+// const selectCategory = () => {};
 
 const defaultState = {
   allCategories: [],
@@ -59,7 +62,30 @@ const defaultState = {
   itemPrice: '',
   itemDescription: '',
   imageUrls: [],
+  buyLink: '',
+  newItemFormData: {},
 };
+
+const init = () => (dispatch, getState) => {
+  const { allCategories, allSubCategories } = getState().admin;
+
+  dispatch(setAllCategories(allCategories));
+  dispatch(setAllSubCategories(allSubCategories));
+}
+
+const selectCategory = catId => async (dispatch, getState) => {
+  dispatch(selectCategoryInternal(catId))
+
+  try {
+    const { allSubCategories } = getState().admin;
+
+    const subcategoriesForCategory = allSubCategories.filter(subCat => subCat.categoryId === catId);
+
+    dispatch(setSubcategoriesForCategory(subcategoriesForCategory));
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 const changeItemImage = e => async (dispatch, getState) => {
   const img = e.target.files[0];
@@ -69,7 +95,7 @@ const changeItemImage = e => async (dispatch, getState) => {
 
 const uploadItemImage = () => async (dispatch, getState) => {
   dispatch(setUploadingImage(true));
-  const { imageFormData, imageUrls } = getState().admin;
+  const { imageFormData, imageUrls } = getState().addNewItem;
   const clonedUrls = cloneDeep(imageUrls);
 
   const uploadTask = storage.ref(`images/${imageFormData.name}`).put(imageFormData);
@@ -96,25 +122,34 @@ const submitNewItem = () => async (dispatch, getState) => {
     imageUrls,
     selectedCategoryId,
     selectedSubCategoryId,
-  } = getState().admin;
+    itemName,
+    itemDescription,
+    itemPrice,
+    buyLink,
+  } = getState().addNewItem;
 
   newItemFormData['categoryId'] = selectedCategoryId;
   newItemFormData['subCategoryId'] = selectedSubCategoryId;
+  newItemFormData['itemName'] = itemName;
+  newItemFormData['itemDescription'] = itemDescription;
+  newItemFormData['itemPrice'] = itemPrice;
+  newItemFormData['buyLink'] = buyLink;
   newItemFormData['itemImage'] = imageUrls;
 
-  const {
-    categoryId,
-    subCategoryId,
-    itemImage,
-    itemName,
-    itemPrice,
-    buyLink,
-  } = newItemFormData;
+  // const {
+  //   categoryId,
+  //   subCategoryId,
+  //   itemImage,
+  //   itemName,
+  //   itemPrice,
+  //   buyLink,
+  // } = newItemFormData;
 
-  if (!categoryId ||
-      !subCategoryId ||
-      !itemImage.length > 0 ||
+  if (!selectedCategoryId ||
+      !selectedSubCategoryId ||
+      !imageUrls.length > 0 ||
       !itemName ||
+      !itemDescription ||
       !itemPrice ||
       !buyLink) {
     dispatch(layoutActions.setAlert(true, 'danger', 'All fields are required!'));
@@ -230,6 +265,8 @@ const discardImage = index => (dispatch, getState) => {
 }
 
 export const ACTIONS = {
+  init,
+  selectCategory,
   selectSubCategory,
   changeItemImage,
   uploadItemImage,
@@ -240,6 +277,7 @@ export const ACTIONS = {
   setItemName,
   setItemPrice,
   setItemDesc,
+  setItemBuyLink,
 };
 
 function AddNewItemReducer(state = defaultState, action) {
@@ -253,13 +291,13 @@ function AddNewItemReducer(state = defaultState, action) {
       return Object.assign({}, state, {
         allSubCategories: action.arr,
       });
-    case SET_SUB_CATEGORIES_FOR_CATEGORY:
-      return Object.assign({}, state, {
-        subcategoriesForCategory: action.arr,
-      });
     case SELECT_CATEGORY:
       return Object.assign({}, state, {
         selectedCategoryId: action.catId,
+      });
+    case SET_SUB_CATEGORIES_FOR_CATEGORY:
+      return Object.assign({}, state, {
+        subcategoriesForCategory: action.arr,
       });
     case SELECT_SUB_CATEGORY:
       return Object.assign({}, state, {
@@ -304,6 +342,10 @@ function AddNewItemReducer(state = defaultState, action) {
     case SET_ITEM_DESC:
       return Object.assign({}, state, {
         itemDescription: action.desc,
+      });
+    case SET_ITEM_BUY_LINK:
+      return Object.assign({}, state, {
+        buyLink: action.link,
       });
     default:
       return state;

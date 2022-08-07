@@ -26,33 +26,33 @@ const ItemSchema = new Schema({
     type: String,
     required: true,
   },
-  offer: {
-    type: String,
-  },
-  isFeatured: {
-    type: Boolean,
-    default: false,
-  },
+  // offer: {
+  //   type: String,
+  // },
+  // isFeatured: {
+  //   type: Boolean,
+  //   default: false,
+  // },
   buyLink: {
     type: String,
     required: true,
   },
-  buyLinks: [
-    {
-      link: {
-        type: String,
-        required: true,
-      },
-      price: {
-        type: String,
-        required: true,
-      },
-      platform: {
-        type: String,
-        required: true,
-      }
-    }
-  ],
+  // buyLinks: [
+  //   {
+  //     link: {
+  //       type: String,
+  //       required: true,
+  //     },
+  //     price: {
+  //       type: String,
+  //       required: true,
+  //     },
+  //     platform: {
+  //       type: String,
+  //       required: true,
+  //     }
+  //   }
+  // ],
 });
 
 const Item = mongoose.model('items', ItemSchema);

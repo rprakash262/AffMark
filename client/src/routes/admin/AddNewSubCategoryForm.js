@@ -73,8 +73,6 @@ class AddNewCategory extends Component {
       submitttingFlag,
     } = this.props;
 
-    console.log({ allCategories }, '==>>>>>>>>')
-
 
     return (
       <div className="admin-add-new-sub-category">

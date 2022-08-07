@@ -1,6 +1,7 @@
 import { ACTIONS as layoutActions } from './LayoutReducer';
 
 import { adminActions } from '../actions';
+import { ACTIONS as adminReducerActions } from './AdminReducer';
 
 const { addNewSubCategory } = adminActions;
 
@@ -58,7 +59,7 @@ const selectCategory = catId => async (dispatch, getState) => {
 
 const submitNewSubCategory = () => async (dispatch, getState) => {
   dispatch(setSubmittingNewSubCat(true));
-  const { newSubCategory, selectedCategoryId } = getState().admin;
+  const { newSubCategory, selectedCategoryId } = getState().addNewSubCategory;
 
   if (!selectedCategoryId) {
     dispatch(layoutActions.setAlert(true, 'danger', 'Please select a category!'));
@@ -85,6 +86,8 @@ const submitNewSubCategory = () => async (dispatch, getState) => {
         return dispatch(layoutActions.setAlert(false, 'danger', response.result));
       }, 4000);
     }
+    
+    dispatch(adminReducerActions.init());
 
     const { result } = response;
     const { subCategoryName: subCatName } = result;

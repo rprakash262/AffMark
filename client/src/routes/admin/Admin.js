@@ -6,11 +6,17 @@ import AddNewCategory from './AddNewCategoryForm';
 import AddNewSubCategory from './AddNewSubCategoryForm';
 import AddNewItemForm from './AddNewItemForm';
 import { ACTIONS } from '../../reducers/AdminReducer';
+import { ACTIONS as addNewCategoryActions } from '../../reducers/AddNewCategoryReducer';
+import { ACTIONS as addNewSubCategoryActions } from '../../reducers/AddNewSubCategoryReducer';
+import { ACTIONS as addNewItemActions } from '../../reducers/AddNewItemReducer';
 import './Admin.css';
 
 class Admin extends Component {
   async componentDidMount() {
-    this.props.init();
+    await this.props.init();
+    this.props.addNewCategoryInit();
+    this.props.addNewSubCategoryInit();
+    this.props.addNewItemInit();
   }
 
   render() {
@@ -106,6 +112,9 @@ const mapDispatch = {
   setSelectedTab: ACTIONS.setSelectedTab,
   changeSecurityKey: ACTIONS.changeSecurityKey,
   submitSecurityKey: ACTIONS.submitSecurityKey,
+  addNewCategoryInit: addNewCategoryActions.init,
+  addNewSubCategoryInit: addNewSubCategoryActions.init,
+  addNewItemInit: addNewItemActions.init,
 }
 
 export default connect(mapState, mapDispatch)(Admin);
