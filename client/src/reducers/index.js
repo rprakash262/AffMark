@@ -9,6 +9,7 @@ import OneProductReducer from './OneProductReducer';
 import AddNewItemReducer from './AddNewItemReducer';
 import AddNewCategoryReducer from './AddNewCategoryReducer';
 import AddNewSubCategoryReducer from './AddNewSubCategoryReducer';
+import SearchReducer from './SearchReducer';
 
 const rootReducer = combineReducers({
   homePage: HomePageReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   addNewItem: AddNewItemReducer,
   addNewCategory: AddNewCategoryReducer,
   addNewSubCategory: AddNewSubCategoryReducer,
+  search: SearchReducer,
 });
 
 export default rootReducer;

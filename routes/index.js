@@ -182,6 +182,7 @@ router.post('/add-new-item', async (req, res) => {
     offer,
     isFeatured,
     buyLink,
+    date,
   } = postData;
 
   try {
@@ -192,9 +193,8 @@ router.post('/add-new-item', async (req, res) => {
       itemDescription,
       itemPrice,
       itemImage: itemImage[0],
-      // offer,
-      // isFeatured,
       buyLink,
+      date,
     });
 
     const response = await newItem.save();
@@ -207,9 +207,8 @@ router.post('/add-new-item', async (req, res) => {
       itemDescription: response.itemDescription,
       itemPrice: response.itemPrice,
       itemImage: response.itemImage,
-      // offer: response.offer,
-      // isFeatured: response.isFeatured,
       buyLink: response.buyLink,
+      date: response.date,
     }
 
     res.json({ success: true, result: item });
@@ -446,6 +445,20 @@ router.post('/delete-one-product', async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     console.log(err)
+  }
+})
+
+router.post('/search-query', async (req, res) => {
+  const { query } = req.body;
+
+  var searchKey = new RegExp(query, 'i')
+
+  try {
+    const response = await Item.find({ itemName: searchKey });
+
+    res.json({ success: true, result: response });
+  } catch (err) {
+    console.log(err);
   }
 })
 

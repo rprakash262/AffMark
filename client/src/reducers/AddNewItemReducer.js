@@ -46,7 +46,6 @@ const setItemName = name => ({ type: SET_ITEM_NAME, name });
 const setItemPrice = price => ({ type: SET_ITEM_PRICE, price });
 const setItemDesc = desc => ({ type: SET_ITEM_DESC, desc });
 const setItemBuyLink = link => ({ type: SET_ITEM_BUY_LINK, link });
-// const selectCategory = () => {};
 
 const defaultState = {
   allCategories: [],
@@ -96,6 +95,16 @@ const changeItemImage = e => async (dispatch, getState) => {
 const uploadItemImage = () => async (dispatch, getState) => {
   dispatch(setUploadingImage(true));
   const { imageFormData, imageUrls } = getState().addNewItem;
+
+  if (!imageFormData) {
+    dispatch(layoutActions.setAlert(true, 'danger', 'Select an image!'));
+
+    return setTimeout(() => {
+      return dispatch(layoutActions.setAlert(false, 'danger', 'Select an image!'));
+    }, 4000);
+
+  }
+
   const clonedUrls = cloneDeep(imageUrls);
 
   const uploadTask = storage.ref(`images/${imageFormData.name}`).put(imageFormData);
@@ -135,15 +144,7 @@ const submitNewItem = () => async (dispatch, getState) => {
   newItemFormData['itemPrice'] = itemPrice;
   newItemFormData['buyLink'] = buyLink;
   newItemFormData['itemImage'] = imageUrls;
-
-  // const {
-  //   categoryId,
-  //   subCategoryId,
-  //   itemImage,
-  //   itemName,
-  //   itemPrice,
-  //   buyLink,
-  // } = newItemFormData;
+  newItemFormData['date'] = new Date();
 
   if (!selectedCategoryId ||
       !selectedSubCategoryId ||
@@ -260,7 +261,7 @@ const discardImage = index => (dispatch, getState) => {
   const clonedUrls = cloneDeep(imageUrls);
   clonedUrls.splice(index, 1);
 
-  dispatch(setImageFormData({}));
+  dispatch(setImageFormData(null));
   dispatch(setImageUrls(clonedUrls));
 }
 

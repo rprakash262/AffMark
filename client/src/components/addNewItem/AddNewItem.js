@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import BackupIcon from '@material-ui/icons/Backup';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
@@ -13,8 +11,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-
-import RateSlider from '../../components/rateSlider';
 
 import { ACTIONS } from '../../reducers/AddNewItemReducer';
 import './AddNewItem.css';
@@ -75,6 +71,7 @@ class AddNewItem extends Component {
       selectedSubCategoryId,
       submitttingFlag,
       submitNewItem,
+      selectedImageInput,
     } = this.props;
 
     return (
@@ -191,6 +188,7 @@ class AddNewItem extends Component {
                   className="input-file"
                   type="file"
                   onChange={e => changeItemImage(e)}
+                  value={selectedImageInput}
                 />
                 {imageFormData && !uploadingImage && (
                   <button className="upload-btn" onClick={() => uploadItemImage()}>
@@ -233,6 +231,7 @@ const mapState = state => {
     itemPrice,
     itemDescription,
     submitttingFlag,
+    selectedImageInput,
   } = state.addNewItem;
 
   return {
@@ -247,6 +246,7 @@ const mapState = state => {
     itemPrice,
     itemDescription,
     submitttingFlag,
+    selectedImageInput,
   }
 }
 

@@ -66,6 +66,14 @@
   margin-bottom: 15px;
 }
 
+.admin-one-form-item > h6 {
+  font-size: 16px;
+  font-weight: 300;
+  color: #000000a6;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
 .admin-one-form-item .one-form-field {
   width: 100%;
   /*font-size: 18px;*/
@@ -159,31 +167,33 @@
 }
 
 .upload-img-preview {
-  width: 100%;
-  max-height: 500px;
-  padding: 20px;
-  box-sizing: border-box;
-  border: 1px solid gray;
+  height: 100px;
   border-radius: 4px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  margin-bottom: 10px;
 }
 
 .upload-img-preview img {
-  width: auto;
-  max-width: 100%;
-  max-height: 260px;
+  width: 100%;
+  height: 100%;
 }
 
 .one-img-preview {
   position: relative;
+  width: 100px;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  padding: 2px;
+  margin: 5px;
 }
 
 .close-preview-btn {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 2px;
+  right: 2px;
 }
 
 .input-file {

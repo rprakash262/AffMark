@@ -18,8 +18,7 @@ import Navbar from '../components/navbar';
 import AlertBar from '../components/alertBar';
 import EditItemModal from '../components/editItemModal';
 import ConfirmDeleteItemPrompt from '../components/confirmDeleteItemPrompt';
-
-const SearchResult = '';
+import SearchResult from '../components/searchResult';
 
 class App extends Component {
   componentDidMount() {
@@ -36,11 +35,13 @@ class App extends Component {
       hideEditItemModal,
       confirmDeleteItemPrompt,
       hideConfirmDeleteItemPrompt,
+      changeSearchText,
+      startSearch,
     } = this.props;
 
     return (
       <div>
-        <Banner />
+        <Banner changeSearchText={changeSearchText} startSearch={startSearch} />
         <Navbar />
         <div
           className="container"
@@ -133,6 +134,8 @@ const mapDispatch = {
   init: ACTIONS.init,
   hideEditItemModal: ACTIONS.hideEditItemModal,
   hideConfirmDeleteItemPrompt: ACTIONS.hideConfirmDeleteItemPrompt,
+  changeSearchText: ACTIONS.changeSearchText,
+  startSearch: ACTIONS.startSearch,
 };
 
 export default connect(mapState, mapDispatch)(App);

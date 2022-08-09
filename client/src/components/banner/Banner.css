@@ -46,3 +46,15 @@
     width: 40px;
     cursor: pointer;
 }
+
+.banner-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-button {
+    margin-left: 20px;
+    cursor: pointer;
+}

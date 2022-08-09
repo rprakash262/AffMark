@@ -42,6 +42,14 @@ export const fetchOneProduct = async productId => {
   return data;
 }
 
+export const searchQuery = async query => {
+  const response = await axios.post('/search-query', { query });
+
+  const { data } = response;
+
+  return data;
+}
+
 // export const fetchItemsByCategory = async categoryIds => {
 //   const response = await axios.post('/items-by-category', {
 //     categoryIds,

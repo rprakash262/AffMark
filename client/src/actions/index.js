@@ -16,6 +16,7 @@ import {
   fetchOneCategoryContent,
   fetchOneSubcategoryContent,
   fetchOneProduct,
+  searchQuery,
 } from './mainActions';
 
 export const adminActions = {
@@ -36,4 +37,5 @@ export const mainActions = {
   fetchOneCategoryContent,
   fetchOneSubcategoryContent,
   fetchOneProduct,
+  searchQuery,
 };
