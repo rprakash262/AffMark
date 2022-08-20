@@ -7,6 +7,7 @@ function Banner({changeSearchText, startSearch}) {
   const redirect = () => {
     window.location.href = '/admin'
   }
+  
   return (
     <div className="banner">
       <div className="banner-container">

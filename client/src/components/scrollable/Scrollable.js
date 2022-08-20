@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './scrollable.css';
-import { scrollToBottom } from '../../reducers/LayoutReducer';
+// import { scrolslToBottom } from '../../reducers/LayoutReducer';
 
 class Scrollable extends React.Component {
 	constructor(props) {
@@ -12,14 +12,14 @@ class Scrollable extends React.Component {
 	}
 
 	componentDidMount() {
-		scrollToBottom();
+		// scrollToBottom();
 	}
 
 	render() {
-		const { id } = this.props;
+		const { id, scrollX } = this.props;
 
 		return (
-			<div className="scrollable" id={id}>
+			<div className={`scrollable ${scrollX ? 'scrollX' : 'scrollY'}`} id={id}>
 				{this.props.children}
 			</div>
 		)

@@ -1,11 +1,14 @@
 import './App.css';
 
 import Main from './routes';
+import Scrollable from './components/scrollable';
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <Scrollable>
+        <Main />
+      </Scrollable>
     </div>
   );
 }

@@ -1,0 +1,17 @@
+.items-slider {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+}
+
+.one-slider-item {
+  width: 200px;
+  height: 100px;
+  background-color: red;
+  margin-left: 10px;
+  margin-right: 10px;
+}

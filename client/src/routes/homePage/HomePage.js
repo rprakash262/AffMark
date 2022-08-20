@@ -6,6 +6,7 @@ import { ACTIONS as adminActions } from '../../reducers/AdminReducer';
 import './HomePage.css';
 import Carousel from '../../components/carousel';
 import OneItem from '../../components/oneItem';
+import Scrollable from '../../components/scrollable';
 
 class HomePage extends Component {
   componentDidMount() {
@@ -50,16 +51,20 @@ class HomePage extends Component {
                 See All
               </button>
             </div>
-            <div className="home-page-item-panel-content">
-              {val.map(item => (
-                <OneItem
-                  item={item}
-                  loggedIn={loggedIn}
-                  editItem={editItem}
-                  deleteItem={deleteItem}
-                />
-              ))}
-            </div>
+            <div style={{ width: '100%', height: '100%' }}>
+              <Scrollable scrollX>
+                <div className="home-page-item-panel-content">
+                    {val.map(item => (
+                      <OneItem
+                        item={item}
+                        loggedIn={loggedIn}
+                        editItem={editItem}
+                        deleteItem={deleteItem}
+                      />
+                    ))}
+                </div>
+              </Scrollable>
+              </div>
           </div>
         ))}
       </div>
