@@ -1,7 +1,8 @@
 import { cloneDeep } from 'lodash';
 
-import { adminActions } from '../actions';
+import { adminActions as AA } from '../actions';
 import { ACTIONS as layoutActions } from './LayoutReducer';
+import { ACTIONS as homePageActions } from './HomePageReducer';
 import { storage } from '../firebase-config';
 
 const {
@@ -9,7 +10,8 @@ const {
   getSubCategories,
   addNewItem,
   postEditItem,
-} = adminActions;
+  postDeleteItem,
+} = AA;
 
 const SET_ALL_CATEGORIES = 'addNewItem/SET_ALL_CATEGORIES';
 const SET_ALL_SUB_CATEGORIES = 'addNewItem/SET_ALL_SUB_CATEGORIES';
@@ -30,6 +32,8 @@ const SET_ITEM_BEST_OFFER = 'addNewItem/SET_ITEM_BEST_OFFER';
 const SET_ITEM_RATING = 'addNewItem/SET_ITEM_RATING';
 const SET_ITEM_DESC = 'addNewItem/SET_ITEM_DESC';
 const SET_ITEM_BUY_LINK = 'addNewItem/SET_ITEM_BUY_LINK';
+const SET_DELETING_ITEM = 'admin/SET_DELETING_ITEM';
+const SET_DELETING_ITEM_FLAG = 'admin/SET_DELETING_ITEM_FLAG';
 
 const setAllCategories = arr => ({ type: SET_ALL_CATEGORIES, arr });
 const setAllSubCategories = arr => ({ type: SET_ALL_SUB_CATEGORIES, arr });
@@ -46,6 +50,8 @@ const setItemName = name => ({ type: SET_ITEM_NAME, name });
 const setItemPrice = price => ({ type: SET_ITEM_PRICE, price });
 const setItemDesc = desc => ({ type: SET_ITEM_DESC, desc });
 const setItemBuyLink = link => ({ type: SET_ITEM_BUY_LINK, link });
+const setDeletingItem = item => ({ type: SET_DELETING_ITEM, item });
+const setDeletingItemFlag = bool => ({ type: SET_DELETING_ITEM_FLAG, bool });
 
 const defaultState = {
   allCategories: [],
@@ -63,6 +69,8 @@ const defaultState = {
   imageUrls: [],
   buyLink: '',
   newItemFormData: {},
+  deletingItem: {},
+  deletingItemFlag: false,
 };
 
 const init = () => (dispatch, getState) => {
@@ -265,6 +273,52 @@ const discardImage = index => (dispatch, getState) => {
   dispatch(setImageUrls(clonedUrls));
 }
 
+const deleteItem = item => async (dispatch) => {
+  dispatch(setDeletingItem(item));
+  dispatch(layoutActions.showConfirmDeleteItemPrompt());
+}
+
+const submitDeleteItem = (item) => async (dispatch, getState) => {
+  dispatch(setDeletingItemFlag(true));
+
+  const { deletingItem } = getState().addNewItem;
+  const { id } = deletingItem;
+
+  try {
+    const response = await postDeleteItem(id);
+    const { success } = response;
+
+    if (success) {
+      dispatch(homePageActions.init());
+      dispatch(layoutActions.hideConfirmDeleteItemPrompt());
+      dispatch(setDeletingItem({}));
+      dispatch(setDeletingItemFlag(false));
+      dispatch(layoutActions.setAlert(true, 'success', 'Item deleted successfully!'));
+
+      setTimeout(() => {
+        dispatch(layoutActions.setAlert(false, 'success', 'Item deleted successfully!'));
+      }, 4000);
+    } else {
+      dispatch(homePageActions.init());
+      dispatch(layoutActions.hideConfirmDeleteItemPrompt());
+      dispatch(setDeletingItem({}));
+      dispatch(setDeletingItemFlag(false));
+      dispatch(layoutActions.setAlert(true, 'success', 'Something went wrong!'));
+
+      setTimeout(() => {
+        dispatch(layoutActions.setAlert(false, 'success', 'Something went wrong!'));
+      }, 4000);
+    }
+  } catch (err) {
+    console.log(err);
+    dispatch(layoutActions.setAlert(true, 'success', 'Something went wrong!'));
+
+    setTimeout(() => {
+      dispatch(layoutActions.setAlert(false, 'success', 'Something went wrong!'));
+    }, 4000);
+  }
+}
+
 export const ACTIONS = {
   init,
   selectCategory,
@@ -279,6 +333,8 @@ export const ACTIONS = {
   setItemPrice,
   setItemDesc,
   setItemBuyLink,
+  deleteItem,
+  submitDeleteItem,
 };
 
 function AddNewItemReducer(state = defaultState, action) {
@@ -347,6 +403,14 @@ function AddNewItemReducer(state = defaultState, action) {
     case SET_ITEM_BUY_LINK:
       return Object.assign({}, state, {
         buyLink: action.link,
+      });
+    case SET_DELETING_ITEM:
+      return Object.assign({}, state, {
+        deletingItem: action.item,
+      });
+    case SET_DELETING_ITEM_FLAG:
+      return Object.assign({}, state, {
+        deletingItemFlag: action.bool,
       });
     default:
       return state;

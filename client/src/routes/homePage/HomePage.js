@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { ACTIONS } from '../../reducers/HomePageReducer';
 import { ACTIONS as adminActions } from '../../reducers/AdminReducer';
+import { ACTIONS as addNewItemActions } from '../../reducers/AddNewItemReducer';
 import './HomePage.css';
 import Carousel from '../../components/carousel';
 import OneItem from '../../components/oneItem';
@@ -91,7 +92,7 @@ const mapState = state => {
 const mapDispatch = {
   init: ACTIONS.init,
   editItem: adminActions.editItem,
-  deleteItem: adminActions.deleteItem,
+  deleteItem: addNewItemActions.deleteItem,
 }
 
 export default connect(mapState, mapDispatch)(HomePage);
