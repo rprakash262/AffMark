@@ -29,3 +29,4 @@ yarn.lock
 
 client/build
 client/node_modules
+config/keys_dev.js
