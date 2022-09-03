@@ -23,7 +23,6 @@ const SET_IMAGE_FORM_DATA = 'addNewItem/SET_IMAGE_DATA';
 const SET_IMAGE_URLS = 'addNewItem/SET_IMAGE_URLS';
 const SET_UPLOADING_IMAGE = 'addNewItem/SET_UPLOADING_IMAGE';
 const SET_LOADING_EDIT_ITEM_MODAL = 'addNewItem/SET_LOADING_EDIT_ITEM_MODAL';
-const SET_EDITING_ITEM = 'addNewItem/SET_EDITING_ITEM';
 const SET_SUBMITTING_FLAG = 'addNewItem/SET_SUBMITTING_FLAG';
 const SET_ITEM_NAME = 'addNewItem/SET_ITEM_NAME';
 const SET_ITEM_PRICE = 'addNewItem/SET_ITEM_PRICE';
@@ -32,8 +31,9 @@ const SET_ITEM_BEST_OFFER = 'addNewItem/SET_ITEM_BEST_OFFER';
 const SET_ITEM_RATING = 'addNewItem/SET_ITEM_RATING';
 const SET_ITEM_DESC = 'addNewItem/SET_ITEM_DESC';
 const SET_ITEM_BUY_LINK = 'addNewItem/SET_ITEM_BUY_LINK';
-const SET_DELETING_ITEM = 'admin/SET_DELETING_ITEM';
-const SET_DELETING_ITEM_FLAG = 'admin/SET_DELETING_ITEM_FLAG';
+const SET_DELETING_ITEM = 'addNewItem/SET_DELETING_ITEM';
+const SET_DELETING_ITEM_FLAG = 'addNewItem/SET_DELETING_ITEM_FLAG';
+const SET_EDITING_ITEM_ID = 'addNewItem/SET_EDITING_ITEM_ID';
 
 const setAllCategories = arr => ({ type: SET_ALL_CATEGORIES, arr });
 const setAllSubCategories = arr => ({ type: SET_ALL_SUB_CATEGORIES, arr });
@@ -44,14 +44,15 @@ const setImageFormData = imageFormData => ({ type: SET_IMAGE_FORM_DATA, imageFor
 const setImageUrls = imageUrls => ({ type: SET_IMAGE_URLS, imageUrls });
 const setUploadingImage = bool => ({ type: SET_UPLOADING_IMAGE, bool });
 const loadEditItemModal = bool => ({ type: SET_LOADING_EDIT_ITEM_MODAL, bool });
-const setEditingItem = item => ({ type: SET_EDITING_ITEM, item });
 const setSubmitting = bool => ({ type: SET_SUBMITTING_FLAG, bool });
+const setNewItemFormData = formData => ({ type: SET_NEW_ITEM_FORM_DATA, formData });
 const setItemName = name => ({ type: SET_ITEM_NAME, name });
 const setItemPrice = price => ({ type: SET_ITEM_PRICE, price });
 const setItemDesc = desc => ({ type: SET_ITEM_DESC, desc });
 const setItemBuyLink = link => ({ type: SET_ITEM_BUY_LINK, link });
 const setDeletingItem = item => ({ type: SET_DELETING_ITEM, item });
 const setDeletingItemFlag = bool => ({ type: SET_DELETING_ITEM_FLAG, bool });
+const setEditingItemId = id => ({ type: SET_EDITING_ITEM_ID, id });
 
 const defaultState = {
   allCategories: [],
@@ -59,7 +60,6 @@ const defaultState = {
   subcategoriesForCategory: [],
   imageFormData: null,
   uploadingImage: false,
-  editingItem: {},
   submitttingFlag: false,
   selectedSubCategoryId: '',
   selectedCategoryId: '',
@@ -71,11 +71,12 @@ const defaultState = {
   newItemFormData: {},
   deletingItem: {},
   deletingItemFlag: false,
+  loadingEditItemModal: false,
+  editingItemId: '',
 };
 
 const init = () => (dispatch, getState) => {
   const { allCategories, allSubCategories } = getState().admin;
-
   dispatch(setAllCategories(allCategories));
   dispatch(setAllSubCategories(allSubCategories));
 }
@@ -84,10 +85,10 @@ const selectCategory = catId => async (dispatch, getState) => {
   dispatch(selectCategoryInternal(catId))
 
   try {
-    const { allSubCategories } = getState().admin;
+    const { allSubCategories } = getState().addNewItem;
 
     const subcategoriesForCategory = allSubCategories.filter(subCat => subCat.categoryId === catId);
-
+    console.log(allSubCategories, subcategoriesForCategory, '===>>>>>>')
     dispatch(setSubcategoriesForCategory(subcategoriesForCategory));
   } catch (err) {
     console.error(err);
@@ -185,6 +186,7 @@ const submitNewItem = () => async (dispatch, getState) => {
     dispatch(setImageFormData({}));
     dispatch(setImageUrls(''))
     dispatch(setSubmitting(false));
+    dispatch(setNewItemFormData({}));
     dispatch(layoutActions.setAlert(true, 'success', 'Item added successfully!'));
 
     setTimeout(() => {
@@ -198,20 +200,19 @@ const submitNewItem = () => async (dispatch, getState) => {
 
 const editItem = item => async (dispatch, getState) => {
   dispatch(loadEditItemModal(true));
-  dispatch(setEditingItem(item));
   dispatch(layoutActions.showEditItemModal(true));
+
+  let subCategories = [];
 
   try {
     const categories = await getCategories();
-    const subCategories = await getSubCategories();
+    subCategories = await getSubCategories();
 
     dispatch(setAllCategories(categories));
     dispatch(setAllSubCategories(subCategories));
   } catch (err) {
     console.error(err);
   }
-
-  let newItemFormData = {};
 
   const {
     categoryId,
@@ -223,41 +224,75 @@ const editItem = item => async (dispatch, getState) => {
     isFeatured,
     buyLink,
     itemImage,
+    id,
   } = item;
 
-  newItemFormData['itemName'] = itemName;
-  newItemFormData['itemPrice'] = itemPrice;
-  newItemFormData['itemDescription'] = itemDescription;
-  newItemFormData['offer'] = offer;
-  newItemFormData['isFeatured'] = isFeatured;
-  newItemFormData['buyLink'] = buyLink;
+  const subcategoriesForCategory = subCategories.filter(subCat => subCat.categoryId === categoryId);
 
-  dispatch(selectCategory(categoryId));
+  dispatch(setSubcategoriesForCategory(subcategoriesForCategory));
+  
+  dispatch(selectCategoryInternal(categoryId));
   dispatch(selectSubCategory(subCategoryId));
-  dispatch(setImageUrls(itemImage))
+  dispatch(setItemName(itemName));
+  dispatch(setItemPrice(itemPrice));
+  dispatch(setItemDesc(itemDescription));
+  dispatch(setItemBuyLink(buyLink));
+  dispatch(setImageUrls([itemImage]));
+  dispatch(setEditingItemId(id));
 
   dispatch(loadEditItemModal(false));
 }
 
 const submitEditNewItem = () => async (dispatch, getState) => {
   const {
-    editingItem,
     newItemFormData,
     selectedCategoryId,
     selectedSubCategoryId,
-    imageUrl,
-  } = getState().admin;
-
-  const { id, itemImage } = editingItem;
+    itemName,
+    itemPrice,
+    itemDescription,
+    buyLink,
+    imageUrls,
+    editingItemId,
+  } = getState().addNewItem;
 
   newItemFormData['categoryId'] = selectedCategoryId;
   newItemFormData['subCategoryId'] = selectedSubCategoryId;
-  newItemFormData['itemImage'] = imageUrl || itemImage;
+  newItemFormData['itemName'] = itemName;
+  newItemFormData['itemDescription'] = itemDescription;
+  newItemFormData['itemPrice'] = itemPrice;
+  newItemFormData['buyLink'] = buyLink;
+  newItemFormData['itemImage'] = imageUrls;
+  newItemFormData['date'] = new Date();
+
+  if (!selectedCategoryId ||
+      !selectedSubCategoryId ||
+      !imageUrls.length > 0 ||
+      !itemName ||
+      !itemDescription ||
+      !itemPrice ||
+      !buyLink) {
+    dispatch(layoutActions.setAlert(true, 'danger', 'All fields are required!'));
+    dispatch(setSubmitting(false));
+
+    return setTimeout(() => {
+      return dispatch(layoutActions.setAlert(false, 'danger', 'All fields are required!'));
+    }, 4000);
+  }
+
+  console.log({editingItemId}, {newItemFormData});
 
   try {
-    const response = await postEditItem(id, newItemFormData);
+    const response = await postEditItem(editingItemId, newItemFormData);
 
-    window.location.reload();
+    dispatch(layoutActions.setAlert(true, 'success', 'Item added successfully!'));
+
+    setTimeout(() => {
+      dispatch(layoutActions.setAlert(false, 'success', 'Item added successfully!'));
+      setTimeout(() => {
+        window.location.reload();        
+      }, 1000);
+    }, 4000);
   } catch (err) {
     console.log(err);
   }
@@ -380,10 +415,6 @@ function AddNewItemReducer(state = defaultState, action) {
       return Object.assign({}, state, {
         loadingEditItemModal: action.bool,
       });
-    case SET_EDITING_ITEM:
-      return Object.assign({}, state, {
-        editingItem: action.item,
-      });
     case SET_SUBMITTING_FLAG:
       return Object.assign({}, state, {
         submitttingFlag: action.bool,
@@ -411,6 +442,10 @@ function AddNewItemReducer(state = defaultState, action) {
     case SET_DELETING_ITEM_FLAG:
       return Object.assign({}, state, {
         deletingItemFlag: action.bool,
+      });
+    case SET_EDITING_ITEM_ID:
+      return Object.assign({}, state, {
+        editingItemId: action.id,
       });
     default:
       return state;

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { ACTIONS } from '../../reducers/HomePageReducer';
-import { ACTIONS as adminActions } from '../../reducers/AdminReducer';
 import { ACTIONS as addNewItemActions } from '../../reducers/AddNewItemReducer';
 import './HomePage.css';
 import Carousel from '../../components/carousel';
@@ -91,7 +90,7 @@ const mapState = state => {
 
 const mapDispatch = {
   init: ACTIONS.init,
-  editItem: adminActions.editItem,
+  editItem: addNewItemActions.editItem,
   deleteItem: addNewItemActions.deleteItem,
 }
 

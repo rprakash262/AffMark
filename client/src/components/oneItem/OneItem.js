@@ -4,9 +4,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import './OneItem.css';
 
 const redirect = (id, link) => {
-  // window.location.href = `/category/subCategory/product?id=${id}`;
+  window.location.href = `/category/subCategory/product?id=${id}`;
   // window.open.href = link;
-  window.open(link, '_blank');
+  // window.open(link, '_blank');
 }
 
 function OneItem({ item, loggedIn, editItem, deleteItem }) {
@@ -27,11 +27,9 @@ function OneItem({ item, loggedIn, editItem, deleteItem }) {
       </div>
       <div className="home-page-one-item-desc">
         <h4>{item.itemName}</h4>
-        {/* <p>{item.itemDescription.slice()}</p> */}
         <p>Rs. {item.itemPrice} /-</p>
-        {/* <p>Offer - {item.offer || 'NA'}</p> */}
         <button onClick={() => redirect(item.id, item.buyLink)}>
-          View / Buy Product
+          View Product
         </button>
       </div>
     </div>

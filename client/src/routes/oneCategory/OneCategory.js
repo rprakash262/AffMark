@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { ACTIONS } from '../../reducers/OneCategoryReducer';
-import { ACTIONS as adminActions } from '../../reducers/AdminReducer';
+import { ACTIONS as addNewItemActions } from '../../reducers/AddNewItemReducer';
 import './OneCategory.css';
 import OneItem from '../../components/oneItem';
 
@@ -83,8 +83,8 @@ const mapState = state => {
 
 const mapDispatch = {
   init: ACTIONS.init,
-  editItem: adminActions.editItem,
-  deleteItem: adminActions.deleteItem,
+  editItem: addNewItemActions.editItem,
+  deleteItem: addNewItemActions.deleteItem,
 };
 
 export default connect(mapState, mapDispatch)(OneCategory);

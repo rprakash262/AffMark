@@ -374,7 +374,7 @@ router.post('/one-subcategory-content', async (req, res) => {
   }
 });
 
-router.post('/edit-one-product', (req, res) => {
+router.post('/edit-one-product', async (req, res) => {
   const { id, newItemFormData } = req.body;
 
   const {
@@ -384,27 +384,21 @@ router.post('/edit-one-product', (req, res) => {
     itemDescription,
     itemPrice,
     itemImage,
-    offer,
-    isFeatured,
     buyLink,
   } = newItemFormData;
 
   try {
-    const response = Item.updateOne( { _id: id }, { $set: {
+    const response = await Item.updateOne( { _id: id }, { $set: {
       categoryId,
       subCategoryId,
       itemName,
       itemDescription,
       itemPrice,
-      itemImage,
-      offer,
-      isFeatured,
+      itemImage: itemImage[0],
       buyLink,
-    }}, (err, resp) => {
-      if (err) throw err;
+    }});
 
-      res.json({ success: true });
-    });
+    res.json({ success: true });
 
   } catch (err) {
     console.log(err);

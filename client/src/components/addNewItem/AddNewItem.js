@@ -72,6 +72,8 @@ class AddNewItem extends Component {
       submitttingFlag,
       submitNewItem,
       selectedImageInput,
+      editingItemId,
+      submitEditNewItem,
     } = this.props;
 
     return (
@@ -204,13 +206,24 @@ class AddNewItem extends Component {
             )}
           </div>
           <div className="admin-one-form-item">
-          <Button
-            variant="contained"
-            onClick={submitttingFlag ? () => {} : submitNewItem}
-            // className="admin-button"
-          >
-            {submitttingFlag ? 'Wait...' : 'Submit'}
-          </Button>
+          {!editingItemId && (
+            <Button
+              variant="contained"
+              onClick={submitttingFlag ? () => {} : submitNewItem}
+              // className="admin-button"
+            >
+              {submitttingFlag ? 'Wait...' : 'Submit'}
+            </Button>
+          )}
+          {editingItemId && (
+            <Button
+              variant="contained"
+              onClick={submitttingFlag ? () => {} : submitEditNewItem}
+              // className="admin-button"
+            >
+              {submitttingFlag ? 'Wait...' : 'Edit'}
+            </Button>
+          )}
         </div>
         </div>
       </div>
@@ -230,8 +243,10 @@ const mapState = state => {
     itemName,
     itemPrice,
     itemDescription,
+    buyLink,
     submitttingFlag,
     selectedImageInput,
+    editingItemId,
   } = state.addNewItem;
 
   return {
@@ -245,8 +260,10 @@ const mapState = state => {
     itemName,
     itemPrice,
     itemDescription,
+    buyLink,
     submitttingFlag,
     selectedImageInput,
+    editingItemId,
   }
 }
 
@@ -261,6 +278,7 @@ const mapDispatch = {
   setItemDesc: ACTIONS.setItemDesc,
   setItemBuyLink: ACTIONS.setItemBuyLink,
   submitNewItem: ACTIONS.submitNewItem,
+  submitEditNewItem: ACTIONS.submitEditNewItem,
 }
 
 export default withStyles(useStyles, styles, { withTheme: true })(connect(mapState, mapDispatch)(AddNewItem));

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { ACTIONS } from '../../reducers/OneProductReducer';
+import './OneProduct.css';
 
 class OneProduct extends Component {
   componentDidMount() {
@@ -12,7 +13,12 @@ class OneProduct extends Component {
   }
 
   render() {
-    const { oneProduct, loadingData } = this.props;
+    const {
+      oneProduct,
+      loadingData,
+      selectImg,
+      selectedImg,
+    } = this.props;
 
     return (
       <div className="one-product">
@@ -20,13 +26,21 @@ class OneProduct extends Component {
           <div>Fetching data. Please wait..</div>
         )}
         {!loadingData && (
-          <div>
-            <div>
-              <img alt="item_img" src={oneProduct.itemImage} />
+          <div className="one-product-content">
+            <div className="one-product-imgs">
+              <div className="one-product-preview-img">
+                <img onClick={() => selectImg(oneProduct.itemImage)} alt="item_img" src={oneProduct.itemImage} />
+                <img onClick={() => selectImg(oneProduct.itemImage)} alt="item_oneProduct.itemImage" src={oneProduct.itemImage} />
+                <img onClick={() => selectImg(oneProduct.itemImage)} alt="item_img" src={oneProduct.itemImage} />
+              </div>
+              <div className="one-product-showing-img">
+                <img alt="item_img" src={selectedImg} />
+              </div>
             </div>
-            <div>
+            <div className="one-product-main">
               <h4>{oneProduct.itemName}</h4>
-              <p>Rs. {oneProduct.itemPrice}</p>
+              <h3>Rs. {oneProduct.itemPrice} /-</h3>
+              <p>{oneProduct.itemDescription}</p>
               <button>
                 <a href={oneProduct.buyLink} target="_blank" rel="noreferrer">Buy on Flipkart</a>
               </button>
@@ -39,16 +53,22 @@ class OneProduct extends Component {
 }
 
 const mapState = state => {
-  const { oneProduct, loadingData } = state.oneProduct;
+  const {
+    oneProduct,
+    loadingData,
+    selectedImg,
+  } = state.oneProduct;
 
   return {
     oneProduct,
     loadingData,
+    selectedImg,
   }
 }
 
 const mapDispatch = {
   init: ACTIONS.init,
+  selectImg: ACTIONS.selectImg,
 }
 
 export default connect(mapState, mapDispatch)(OneProduct);
