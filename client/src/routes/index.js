@@ -5,7 +5,8 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-  
+
+import '../App.css';  
 import { ACTIONS } from '../reducers/LayoutReducer';
 import HomePage from './homePage';
 import OneProduct from './oneProduct';
@@ -19,6 +20,8 @@ import AlertBar from '../components/alertBar';
 import EditItemModal from '../components/editItemModal';
 import ConfirmDeleteItemPrompt from '../components/confirmDeleteItemPrompt';
 import SearchResult from '../components/searchResult';
+import Scrollable from '../components/scrollable';
+import ItemsSlider from '../components/itemsSlider';
 
 class App extends Component {
   componentDidMount() {
@@ -40,55 +43,58 @@ class App extends Component {
     } = this.props;
 
     return (
-      <div>
-        <Banner changeSearchText={changeSearchText} startSearch={startSearch} />
-        <Navbar />
-        <div
-          className="container"
-          style={{ width: '90%', margin: 'auto', padding: '10px' }}
-        >
-          <BrowserRouter>
-            <Route
-              exact
-              path="/"
-              component={HomePage}
-            />
-            <Switch>
-              <Route
-                exact
-                path="/category"  
-                component={OneCategory}
-              />
-            </Switch>
-            <Switch>
-              <Route
-                exact
-                path="/category/subCategory"  
-                component={OneSubcategory}
-              />
-            </Switch>
-            <Switch>
-              <Route
-                exact
-                path="/category/subCategory/product"  
-                component={OneProduct}
-              />
-            </Switch>
-            <Switch>
-              <Route
-                exact
-                path="/search"  
-                component={SearchResult}
-              />
-            </Switch>
-            <Switch>
-              <Route
-                exact
-                path="/admin"  
-                component={Admin}
-              />
-            </Switch>
-          </BrowserRouter>
+      <div className="layout">
+        <div className="layout-top">
+          <Banner changeSearchText={changeSearchText} startSearch={startSearch} />
+          <Navbar />
+        </div>
+        <div className="layout-bottom">
+          <Scrollable>
+            <div className="container">
+              <BrowserRouter>
+                <Route
+                  exact
+                  path="/"
+                  component={HomePage}
+                />
+                <Switch>
+                  <Route
+                    exact
+                    path="/category"  
+                    component={OneCategory}
+                  />
+                </Switch>
+                <Switch>
+                  <Route
+                    exact
+                    path="/category/subCategory"  
+                    component={OneSubcategory}
+                  />
+                </Switch>
+                <Switch>
+                  <Route
+                    exact
+                    path="/category/subCategory/product"  
+                    component={OneProduct}
+                  />
+                </Switch>
+                <Switch>
+                  <Route
+                    exact
+                    path="/search"  
+                    component={SearchResult}
+                  />
+                </Switch>
+                <Switch>
+                  <Route
+                    exact
+                    path="/admin"  
+                    component={Admin}
+                  />
+                </Switch>
+              </BrowserRouter>
+            </div>
+          </Scrollable>
         </div>
         {/* <Footer /> */}
         {editItemModal && (
