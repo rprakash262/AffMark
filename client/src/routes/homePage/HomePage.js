@@ -9,6 +9,8 @@ import Carousel from '../../components/carousel';
 import OneItem from '../../components/oneItem';
 import Scrollable from '../../components/scrollable';
 import ItemsSlider from '../../components/itemsSlider';
+import OneItemSlider from '../../components/oneItemSlider';
+import OneCarouselItem from '../../components/oneCarouselItem';
 
 class HomePage extends Component {
   componentDidMount() {
@@ -31,7 +33,11 @@ class HomePage extends Component {
 
     return (
       <div>
-        <Carousel featuredItems={featuredItems} />
+        <OneItemSlider
+          items={featuredItems}
+          oneItem={item => <OneCarouselItem item={item} />}
+        />
+        {/* <Carousel featuredItems={featuredItems} /> */}
         {loadingHomePage && (
           <div>
             <div className="home-page-item-panel">
@@ -70,26 +76,22 @@ class HomePage extends Component {
           </div>
         ))}*/}
         {Object.entries(homePageContent).map(([key, val]) => (
-          <div className="home-page-item-panel">
+          <div className="home-page-item-panel" key={key}>
             <div className="home-page-item-panel-header">
               <h4>{key}</h4>
               <button onClick={() => this.redirectHandler(val[0].categoryId)}>
                 See All
               </button>
             </div>
-            <div style={{ width: '100%', height: '100%' }}>
-              <Scrollable scrollX>
-                <div className="home-page-item-panel-content">
-                  <ItemsSlider
-                    items={val}
-                    loggedIn={loggedIn}
-                    editItem={editItem}
-                    deleteItem={deleteItem}
-                    oneItem={(item) => <OneItem item={item} />}
-                  />
-                </div>
-              </Scrollable>
-              </div>
+            <div className="home-page-item-panel-content">
+              <ItemsSlider
+                items={val}
+                loggedIn={loggedIn}
+                editItem={editItem}
+                deleteItem={deleteItem}
+                oneItem={(item) => <OneItem item={item} />}
+              />
+            </div>
           </div>
         ))}
       </div>

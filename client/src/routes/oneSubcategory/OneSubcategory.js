@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import { ACTIONS } from '../../reducers/OneSubCategoryReducer';
 import { ACTIONS as addNewItemActions } from '../../reducers/AddNewItemReducer';
 import './OneSubcategory.css';
@@ -31,7 +32,7 @@ class OneSubcategory extends Component {
       <div>
         {loadingData && (
           <div>
-            Loading...
+            <HourglassBottomIcon />
           </div>
         )}
         <div className="home-page-item-panel-content">

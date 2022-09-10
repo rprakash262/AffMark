@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
 import BackupIcon from '@material-ui/icons/Backup';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
@@ -10,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 
 import { ACTIONS } from '../../reducers/AddNewItemReducer';
@@ -59,11 +61,13 @@ class AddNewItem extends Component {
       itemPrice,
       itemDescription,
       buyLink,
+      isFeatured,
       setItemName,
       setItemPrice,
       setItemDesc,
       setItemBuyLink,
       allCategories,
+      setItemFeatured,
       selectedCategoryId,
       selectCategory,
       subcategoriesForCategory,
@@ -156,6 +160,19 @@ class AddNewItem extends Component {
             />
           </div>
           <div className="admin-one-form-item">
+            <FormControlLabel
+              label="Is Featured"
+              control = { <Checkbox
+                value={isFeatured}
+                className="one-form-field"
+                label="isFeatured"
+                variant="outlined"
+                checked={isFeatured}
+                onChange={() => setItemFeatured(!isFeatured)}
+              /> }
+            />
+          </div>
+          <div className="admin-one-form-item">
             <TextField
               value={buyLink}
               className="one-form-field"
@@ -243,6 +260,7 @@ const mapState = state => {
     itemName,
     itemPrice,
     itemDescription,
+    isFeatured,
     buyLink,
     submitttingFlag,
     selectedImageInput,
@@ -260,6 +278,7 @@ const mapState = state => {
     itemName,
     itemPrice,
     itemDescription,
+    isFeatured,
     buyLink,
     submitttingFlag,
     selectedImageInput,
@@ -279,6 +298,7 @@ const mapDispatch = {
   setItemBuyLink: ACTIONS.setItemBuyLink,
   submitNewItem: ACTIONS.submitNewItem,
   submitEditNewItem: ACTIONS.submitEditNewItem,
+  setItemFeatured: ACTIONS.setItemFeatured,
 }
 
 export default withStyles(useStyles, styles, { withTheme: true })(connect(mapState, mapDispatch)(AddNewItem));

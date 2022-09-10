@@ -170,8 +170,6 @@ router.post('/get-subcategories', async (req, res) => {
 router.post('/add-new-item', async (req, res) => {
   const { postData } = req.body;
 
-  console.log(postData);
-
   const {
     categoryId,
     subCategoryId,
@@ -194,6 +192,7 @@ router.post('/add-new-item', async (req, res) => {
       itemPrice,
       itemImage: itemImage[0],
       buyLink,
+      isFeatured,
       date,
     });
 
@@ -208,6 +207,7 @@ router.post('/add-new-item', async (req, res) => {
       itemPrice: response.itemPrice,
       itemImage: response.itemImage,
       buyLink: response.buyLink,
+      isFeatured: response.isFeatured,
       date: response.date,
     }
 

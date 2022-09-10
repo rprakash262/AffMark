@@ -45,8 +45,6 @@ class Carousel extends Component {
 
     const selectedItem = featuredItems[selectedIndex];
 
-    console.log({selectedItem});
-
     return (
       <div className="carousel">
         <div className="carousel-container">

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import { ACTIONS } from '../../reducers/OneCategoryReducer';
 import { ACTIONS as addNewItemActions } from '../../reducers/AddNewItemReducer';
 import './OneCategory.css';
 import OneItem from '../../components/oneItem';
+import ItemsSlider from '../../components/itemsSlider';
 
 class OneCategory extends Component {
   componentDidMount() {
@@ -33,16 +35,16 @@ class OneCategory extends Component {
           <div>
             <div className="home-page-item-panel">
               <div className="home-page-item-panel-header">
-                <h4>Loading...</h4>
-                <button>Loading...</button>
+                <h4><HourglassBottomIcon /></h4>
+                <button><HourglassBottomIcon /></button>
               </div>
               <div className="home-page-item-panel-content">
-                Loading...
+                <HourglassBottomIcon />
               </div>
             </div>
           </div>
         )}
-        {Object.entries(oneCategoryContent).map(([key, val]) => (
+        {/*{Object.entries(oneCategoryContent).map(([key, val]) => (
           <div className="home-page-item-panel">
             <div className="home-page-item-panel-header">
               <h4>{key}</h4>
@@ -59,6 +61,25 @@ class OneCategory extends Component {
                   deleteItem={deleteItem}
                 />
               )}
+            </div>
+          </div>
+        ))}*/}
+        {Object.entries(oneCategoryContent).map(([key, val]) => (
+          <div className="home-page-item-panel">
+            <div className="home-page-item-panel-header">
+              <h4>{key}</h4>
+              <button onClick={() => this.redirectHandler(val[0].subCategoryId)}>
+                See All
+              </button>
+            </div>
+            <div className="home-page-item-panel-content">
+              <ItemsSlider
+                items={val}
+                loggedIn={loggedIn}
+                editItem={editItem}
+                deleteItem={deleteItem}
+                oneItem={(item) => <OneItem item={item} />}
+              />
             </div>
           </div>
         ))}

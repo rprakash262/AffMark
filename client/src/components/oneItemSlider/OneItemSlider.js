@@ -2,9 +2,9 @@ import React from 'react';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import './itemsSlider.css';
+import './oneItemSlider.css';
 
-class ItemsSlider extends React.Component {
+class OneItemSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,30 +15,16 @@ class ItemsSlider extends React.Component {
     };
   }
 
-  // componentDidMount () {
-  //   let child = document.getElementsByClassName('one-slider-item')[0];
-  //   let childWidth = child && child.clientWidth;
-
-  //   this.setState({ childWidth });
-  // }
-
-  // getContainerWidth = (e) => {
-  //   this.setState({
-  //     containerWidth: this.refs.refContainer.clientWidth,
-  //     numChilds: this.refs.refContainer.children.length,
-  //   });
-  // }
-
   componentWillReceiveProps (nextProps, prevProps) {
     if (nextProps.items.length > 0) {
-      let child = document.getElementsByClassName('one-slider-item');
+      let child = document.getElementsByClassName('one-item-slider-item');
       let childWidth = child && child[0] && child[0].clientWidth;
 
 
       this.setState({
         childWidth,
-        containerWidth: this.refs.refContainer.clientWidth,
-        numChilds: this.refs.refContainer.children.length,
+        containerWidth: this.refs.refContainer2.clientWidth,
+        numChilds: this.refs.refContainer2.children.length,
       });
     }
   }
@@ -62,7 +48,9 @@ class ItemsSlider extends React.Component {
   slideRight = () => {
     const { childWidth, containerWidth, left, numChilds } = this.state;
     
-    const maxLeft = (numChilds * childWidth) - containerWidth;
+    const maxLeft = (numChilds * childWidth) - (1 * containerWidth);
+
+    console.log({childWidth, containerWidth, numChilds, maxLeft})
 
     if (left <= -maxLeft) return;
 
@@ -81,22 +69,22 @@ class ItemsSlider extends React.Component {
     const { left, containerWidth } = this.state;
     const { items, oneItem } = this.props;
 
+    console.log({items})
     return (
-      <div className="items-slider">
-        <div className="items-slider-container">
+      <div className="one-item-slider">
+        <div className="one-item-slider-container">
           <div className="slide-left-btn" onClick={this.slideLeft}>
             <ArrowBackIosIcon className="arrow-btn" />
           </div>
-          <div className="items-slider-main">
+          <div className="one-item-slider-main">
             <div
-              className="items-slider-main-container"
-              id="sliderContainer"
-              // onLoad={e => this.getContainerWidth(e)}
-              ref='refContainer'
+              className="one-item-slider-main-container"
+              // onLoad={e => this.setContainerWidth(e)}
+              ref='refContainer2'
               style={{ left }}
             >
-              {items && items.length && items.map(item => (
-                <div className="one-slider-item" key={item.id}>
+              {items && items.length > 0 && items.map(item => (
+                <div id={item.id} className="one-item-slider-item">
                   {oneItem(item)}
                 </div>
               ))}
@@ -111,4 +99,4 @@ class ItemsSlider extends React.Component {
   }
 }
 
-export default ItemsSlider;
+export default OneItemSlider;

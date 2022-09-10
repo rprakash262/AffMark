@@ -29,10 +29,10 @@ const ItemSchema = new Schema({
   // offer: {
   //   type: String,
   // },
-  // isFeatured: {
-  //   type: Boolean,
-  //   default: false,
-  // },
+  isFeatured: {
+    type: Boolean,
+    default: false,
+  },
   buyLink: {
     type: String,
     required: true,
