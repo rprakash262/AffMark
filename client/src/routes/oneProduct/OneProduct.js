@@ -29,9 +29,9 @@ class OneProduct extends Component {
           <div className="one-product-content">
             <div className="one-product-imgs">
               <div className="one-product-preview-img">
-                <img onClick={() => selectImg(oneProduct.itemImage)} alt="item_img" src={oneProduct.itemImage} />
-                <img onClick={() => selectImg(oneProduct.itemImage)} alt="item_oneProduct.itemImage" src={oneProduct.itemImage} />
-                <img onClick={() => selectImg(oneProduct.itemImage)} alt="item_img" src={oneProduct.itemImage} />
+                {oneProduct && oneProduct.itemImage && oneProduct.itemImage.length > 0 && oneProduct.itemImage.map(img => (
+                  <img onClick={() => selectImg(img)} alt="item_img" src={img} />
+                ))}
               </div>
               <div className="one-product-showing-img">
                 <img alt="item_img" src={selectedImg} />

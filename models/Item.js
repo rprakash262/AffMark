@@ -26,6 +26,10 @@ const ItemSchema = new Schema({
     type: String,
     required: true,
   },
+  itemImage: [{
+    type: String,
+    required: true,
+  }],
   // offer: {
   //   type: String,
   // },
