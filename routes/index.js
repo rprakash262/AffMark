@@ -179,6 +179,7 @@ router.post('/add-new-item', async (req, res) => {
     itemImage,
     offer,
     isFeatured,
+    customerRating,
     buyLink,
     date,
   } = postData;
@@ -192,6 +193,7 @@ router.post('/add-new-item', async (req, res) => {
       itemPrice,
       // itemImage: itemImage[0],
       itemImage,
+      customerRating,
       buyLink,
       isFeatured,
       date,
@@ -207,6 +209,7 @@ router.post('/add-new-item', async (req, res) => {
       itemDescription: response.itemDescription,
       itemPrice: response.itemPrice,
       itemImage: response.itemImage,
+      customerRating: response.customerRating,
       buyLink: response.buyLink,
       isFeatured: response.isFeatured,
       date: response.date,
@@ -214,7 +217,7 @@ router.post('/add-new-item', async (req, res) => {
 
     res.json({ success: true, result: item });
   } catch (err) {
-    console.log(err);
+    res.json({ success: false, result: 'Something went wrong' });
   }
 });
 
@@ -420,6 +423,7 @@ router.post('/get-one-product', async (req, res) => {
       itemDescription: response.itemDescription,
       itemPrice: response.itemPrice,
       itemImage: response.itemImage,
+      customerRating: response.customerRating,
       offer: response.offer,
       isFeatured: response.isFeatured,
       buyLink: response.buyLink,

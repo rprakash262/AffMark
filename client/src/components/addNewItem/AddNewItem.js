@@ -15,6 +15,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 
 import { ACTIONS } from '../../reducers/AddNewItemReducer';
+import RateSlider from '../../components/rateSlider';
 import './AddNewItem.css';
 
 const useStyles = (theme) => ({
@@ -66,6 +67,7 @@ class AddNewItem extends Component {
       setItemPrice,
       setItemDesc,
       setItemBuyLink,
+      setCustomerRating,
       allCategories,
       setItemFeatured,
       selectedCategoryId,
@@ -158,6 +160,9 @@ class AddNewItem extends Component {
               variant="outlined"
               onChange={e => setItemPrice(e.target.value)}
             />
+          </div>
+          <div className="admin-one-form-item">
+            <RateSlider onChange={val => setCustomerRating(val)}/>
           </div>
           <div className="admin-one-form-item">
             <FormControlLabel
@@ -296,6 +301,7 @@ const mapDispatch = {
   setItemPrice: ACTIONS.setItemPrice,
   setItemDesc: ACTIONS.setItemDesc,
   setItemBuyLink: ACTIONS.setItemBuyLink,
+  setCustomerRating: ACTIONS.setCustomerRating,
   submitNewItem: ACTIONS.submitNewItem,
   submitEditNewItem: ACTIONS.submitEditNewItem,
   setItemFeatured: ACTIONS.setItemFeatured,

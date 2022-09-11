@@ -41,6 +41,9 @@
 .one-product-main {
   box-sizing: border-box;
   padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .one-product-main h4 {

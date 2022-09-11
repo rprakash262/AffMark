@@ -18,7 +18,6 @@ const SET_ALL_SUB_CATEGORIES = 'addNewItem/SET_ALL_SUB_CATEGORIES';
 const SET_SUB_CATEGORIES_FOR_CATEGORY = 'addNewItem/SET_SUB_CATEGORIES_FOR_CATEGORY';
 const SELECT_CATEGORY = 'addNewItem/SELECT_CATEGORY';
 const SELECT_SUB_CATEGORY = 'addNewItem/SELECT_SUB_CATEGORY';
-const SET_NEW_ITEM_FORM_DATA = 'addNewItem/SET_NEW_ITEM_FORM_DATA';
 const SET_IMAGE_FORM_DATA = 'addNewItem/SET_IMAGE_DATA';
 const SET_IMAGE_URLS = 'addNewItem/SET_IMAGE_URLS';
 const SET_UPLOADING_IMAGE = 'addNewItem/SET_UPLOADING_IMAGE';
@@ -29,7 +28,7 @@ const SET_ITEM_PRICE = 'addNewItem/SET_ITEM_PRICE';
 const SET_ITEM_DISCOUNT = 'addNewItem/SET_ITEM_DISCOUNT';
 const SET_ITEM_BEST_OFFER = 'addNewItem/SET_ITEM_BEST_OFFER';
 const SET_ITEM_FEATURED = 'addNewItem/SET_ITEM_FEATURED';
-// const SET_ITEM_RATING = 'addNewItem/SET_ITEM_RATING';
+const SET_CUSTOMER_RATING = 'addNewItem/SET_CUSTOMER_RATING';
 const SET_ITEM_DESC = 'addNewItem/SET_ITEM_DESC';
 const SET_ITEM_BUY_LINK = 'addNewItem/SET_ITEM_BUY_LINK';
 const SET_DELETING_ITEM = 'addNewItem/SET_DELETING_ITEM';
@@ -46,10 +45,10 @@ const setImageUrls = imageUrls => ({ type: SET_IMAGE_URLS, imageUrls });
 const setUploadingImage = bool => ({ type: SET_UPLOADING_IMAGE, bool });
 const loadEditItemModal = bool => ({ type: SET_LOADING_EDIT_ITEM_MODAL, bool });
 const setSubmitting = bool => ({ type: SET_SUBMITTING_FLAG, bool });
-const setNewItemFormData = formData => ({ type: SET_NEW_ITEM_FORM_DATA, formData });
 const setItemName = name => ({ type: SET_ITEM_NAME, name });
 const setItemPrice = price => ({ type: SET_ITEM_PRICE, price });
 const setItemDesc = desc => ({ type: SET_ITEM_DESC, desc });
+const setCustomerRating = rating => ({ type: SET_CUSTOMER_RATING, rating });
 const setItemFeatured = bool => ({ type: SET_ITEM_FEATURED, bool });
 const setItemBuyLink = link => ({ type: SET_ITEM_BUY_LINK, link });
 const setDeletingItem = item => ({ type: SET_DELETING_ITEM, item });
@@ -70,8 +69,8 @@ const defaultState = {
   itemDescription: '',
   imageUrls: [],
   isFeatured: false,
+  customerRating: 0,
   buyLink: '',
-  newItemFormData: {},
   deletingItem: {},
   deletingItemFlag: false,
   loadingEditItemModal: false,
@@ -128,7 +127,6 @@ const uploadItemImage = () => async (dispatch, getState) => {
       .getDownloadURL()
       .then(url => {
         clonedUrls.push(url);
-        console.log({clonedUrls})
         dispatch(setImageUrls(clonedUrls))
         dispatch(setImageFormData(null));
         dispatch(setUploadingImage(false));
@@ -139,7 +137,6 @@ const uploadItemImage = () => async (dispatch, getState) => {
 const submitNewItem = () => async (dispatch, getState) => {
   dispatch(setSubmitting(true));
   const {
-    newItemFormData,
     imageUrls,
     selectedCategoryId,
     selectedSubCategoryId,
@@ -147,8 +144,11 @@ const submitNewItem = () => async (dispatch, getState) => {
     itemDescription,
     itemPrice,
     isFeatured,
+    customerRating,
     buyLink,
   } = getState().addNewItem;
+
+  let newItemFormData = {};
 
   newItemFormData['categoryId'] = selectedCategoryId;
   newItemFormData['subCategoryId'] = selectedSubCategoryId;
@@ -157,6 +157,7 @@ const submitNewItem = () => async (dispatch, getState) => {
   newItemFormData['itemPrice'] = itemPrice;
   newItemFormData['isFeatured'] = isFeatured;
   newItemFormData['buyLink'] = buyLink;
+  newItemFormData['customerRating'] = customerRating;
   newItemFormData['itemImage'] = imageUrls;
   newItemFormData['date'] = new Date();
 
@@ -189,10 +190,14 @@ const submitNewItem = () => async (dispatch, getState) => {
     dispatch(selectCategoryInternal(''));
     dispatch(selectSubCategory(''));
     dispatch(setImageFormData({}));
-    dispatch(setImageUrls(''))
-    dispatch(setItemFeatured(false))
+    dispatch(setItemName(''));
+    dispatch(setItemDesc(''));
+    dispatch(setItemPrice(''));
+    dispatch(setItemBuyLink(''));
+    dispatch(setImageUrls([]));
+    dispatch(setCustomerRating(0));
+    dispatch(setItemFeatured(false));
     dispatch(setSubmitting(false));
-    dispatch(setNewItemFormData({}));
     dispatch(layoutActions.setAlert(true, 'success', 'Item added successfully!'));
 
     setTimeout(() => {
@@ -374,6 +379,7 @@ export const ACTIONS = {
   setItemPrice,
   setItemDesc,
   setItemFeatured,
+  setCustomerRating,
   setItemBuyLink,
   deleteItem,
   submitDeleteItem,
@@ -402,10 +408,6 @@ function AddNewItemReducer(state = defaultState, action) {
       return Object.assign({}, state, {
         selectedSubCategoryId: action.subCatId,
       });
-    case SET_NEW_ITEM_FORM_DATA:
-      return Object.assign({}, state, {
-        newItemFormData: action.formData,
-      });
     case SET_IMAGE_FORM_DATA:
       return Object.assign({}, state, {
         imageFormData: action.imageFormData,
@@ -413,6 +415,10 @@ function AddNewItemReducer(state = defaultState, action) {
     case SET_IMAGE_URLS:
       return Object.assign({}, state, {
         imageUrls: action.imageUrls,
+      });
+    case SET_CUSTOMER_RATING:
+      return Object.assign({}, state, {
+        customerRating: action.rating,
       });
     case SET_UPLOADING_IMAGE:
       return Object.assign({}, state, {

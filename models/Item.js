@@ -41,6 +41,9 @@ const ItemSchema = new Schema({
     type: String,
     required: true,
   },
+  customerRating: {
+    type: Number,
+  },
   date: {
     type: Date,
     required: true,

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import StarIcon from '@mui/icons-material/Star';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
 import { ACTIONS } from '../../reducers/OneProductReducer';
 import './OneProduct.css';
 
@@ -39,6 +42,19 @@ class OneProduct extends Component {
             </div>
             <div className="one-product-main">
               <h4>{oneProduct.itemName}</h4>
+              <div>
+              {
+                Array(5).fill().map((x, i) => {
+                  if (oneProduct.customerRating > i - 1 && oneProduct.customerRating < i + 1) {
+                    return <StarHalfIcon style={{ fontSize: '20px', color: '#ed143d' }} />
+                  } else if (oneProduct.customerRating < i + 1) {
+                    return <StarOutlineIcon style={{ fontSize: '20px', color: '#ed143d' }} />
+                  } else if (oneProduct.customerRating > i + 1) {
+                    return <StarIcon style={{ fontSize: '20px', color: '#ed143d' }} />
+                  }
+                })
+              }
+              </div>
               <h3>Rs. {oneProduct.itemPrice} /-</h3>
               <p>{oneProduct.itemDescription}</p>
               <button>
